@@ -27,10 +27,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         createNotificationChannel()
-
+        
         binding.btnButton.setOnClickListener {
             sendNotification()
         }
+        
     }
 
     private fun createNotificationChannel(){
@@ -38,20 +39,23 @@ class MainActivity : AppCompatActivity() {
             val name = "Notification Title"
             val descriptionText = "Notification Description"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
+     
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply{
                 description = descriptionText
             }
+            
             val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
+    
     private fun sendNotification(){
 
         val intent = Intent(this,MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+        
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this,0,intent,0)
-
         val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.ic_launcher_foreground)
         val bitmapLargeIcon = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.ic_launcher_foreground)
 
